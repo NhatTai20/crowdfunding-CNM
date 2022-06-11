@@ -6,10 +6,11 @@ function CampaignList() {
   return (
     <main>
     <div>CampaignList</div>
+    <Link to='new'>Create a new campaign</Link>
     <div style={{display: 'flex'}}>
       <nav style={{padding: "1rem", borderRight: "1px solid"}}>
         {campaigns.map(campaign => (
-          <Link to={`/campaigns/${campaign.id}`} key={campaign.id} style={{display: 'block', margin: '1rem'}}>{campaign.name}</Link>
+          <Link to={`${campaign.id}`} key={campaign.id} style={{display: 'block', margin: '1rem'}}>{campaign.name}</Link>
         ))}
       </nav>
       <Outlet/>

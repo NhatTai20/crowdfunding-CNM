@@ -19,8 +19,8 @@ root.render(
           <Route path="campaigns" element={<CampaignList />}>
             <Route index element={<h2 style={{padding: '1rem'}}>Please select a compaign</h2>}/>
             <Route path=':campaignId' element={<CampaignDetail/>}/>
+            <Route path="new" element={<NewCampaign />} />
           </Route>
-          <Route path="campaigns/new" element={<NewCampaign />} />
         </Route>
       </Routes>
     </BrowserRouter>
