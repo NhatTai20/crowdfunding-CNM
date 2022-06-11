@@ -1,15 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./component/Home/Home";
+import CampaignDetail from "./component/CampaignDetail";
+import NewCampaign from "./component/NewCampaign";
+import CampaignList from "./component/CampaignList";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />}>
+          <Route path="campaigns" element={<CampaignList />}>
+            <Route index element={<h2 style={{padding: '1rem'}}>Please select a compaign</h2>}/>
+            <Route path=':campaignId' element={<CampaignDetail/>}/>
+          </Route>
+          <Route path="campaigns/new" element={<NewCampaign />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
