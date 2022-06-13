@@ -7,6 +7,7 @@ import Home from "./component/Home/Home";
 import CampaignDetail from "./component/CampaignDetail";
 import NewCampaign from "./component/NewCampaign";
 import CampaignList from "./component/CampaignList";
+import CampaignRequest from "./component/CampaignRequest";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,7 +19,8 @@ root.render(
         <Route path="/" element={<Home />}>
           <Route path="campaigns" element={<CampaignList />}>
             <Route index element={<h2 style={{padding: '1rem'}}>Please select a compaign</h2>}/>
-            <Route path=':campaignId' element={<CampaignDetail/>}/>
+            {/* <Route path=':campaignId' element={<CampaignDetail/>}/> */}
+            <Route path=':campaignId' element={<CampaignRequest/>}/>
             <Route path="new" element={<NewCampaign />} />
           </Route>
         </Route>
