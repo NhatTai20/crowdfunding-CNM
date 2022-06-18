@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FundModal from '../Fund/FundModal';
 import RefundModal from '../Fund/RefundModal';
-import { Button } from '@mui/material';
 
 function Project(project: any, accounts: any, web3: any, pIndex: any) {
     const [amount, setAmount] = useState(null);

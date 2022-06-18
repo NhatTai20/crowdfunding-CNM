@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
-import "./style.css"
+import React from 'react'
 import CancelIcon from '@mui/material/Icon';
-
+import './style.scss';
 
 function RefundModal(setROpen: any, project: any, refund: any) {
     const isExpired = () => {

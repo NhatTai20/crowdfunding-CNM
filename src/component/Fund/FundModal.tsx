@@ -1,12 +1,11 @@
-import React, { useContext } from 'react'
-import "./style.css"
+import React from 'react'
 import CancelIcon from '@mui/material/Icon';
-
+import './style.scss';
 
 function FundModal(
     setOpen: any,
-    amount: any,
     setAmount: any,
+    amount: any,
     fund: any,
     desc: any,
     title: any,
