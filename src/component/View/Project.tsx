@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import FundModal from '../Fund/FundModal';
+import RefundModal from '../Fund/RefundModal';
 
 function Project(project: any, accounts: any, web3: any, pIndex: any) {
-    const [amount, setAmount] = useState(null)
-    const [funding, setFunding] = useState(0)
-    const [open, setOpen] = useState(false)
-    const [rOpen, setROpen] = useState(false)
-  return (
-    <div className="project-card">
+    const [amount, setAmount] = useState(null);
+    const [funding, setFunding] = useState(0);
+    const [open, setOpen] = useState(false);
+    const [rOpen, setROpen] = useState(false);
+
+
+    return (
+        <div className="project-card">
             <div className="top-tile">
                 <h3>{project.projectTitle}</h3>
                 <div className="funded">
@@ -27,8 +31,25 @@ function Project(project: any, accounts: any, web3: any, pIndex: any) {
                 <button onClick={() => setOpen(true)}>Fund</button>
                 {funding !== 0 && <button onClick={() => setROpen(true)}>Refund</button>}
             </div>
+            {open &&
+                <FundModal
+                    setOpen={setOpen}
+                    setAmount={setAmount}
+                    amount={amount}
+                    // fund={fundProject}
+                    desc={project.projectDesc}
+                    title={project.projectTitle}
+                    targetAmt={project.goalAmount}
+                    curAmt={project.currentAmount} />}
+            {rOpen && (
+                <RefundModal
+                    setROpen={setROpen}
+                    project={project}
+                // refund={refund}
+                />
+            )}
         </div>
-  )
+    )
 }
 
 export default Project

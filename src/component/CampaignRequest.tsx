@@ -17,15 +17,6 @@ import {
 import DialogRequest from './DialogRequest';
 
 
-interface Data{
-    id: number,
-    desciption: string,
-    amount: number,
-    recipient: string,
-    count: number,
-    state: string,
-}
-
 function createData(
     id: number,
     desciption: string,
