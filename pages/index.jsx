@@ -1,41 +1,36 @@
 import React from 'react';
 import factory from '../ethereum/factory';
-import { Card, Button } from 'semantic-ui-react';
 import Layout from '../components/layout';
 import { Link } from '../routes';
-
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 const CampaignIndex = ({ campaigns }) => {
-  const renderCampaings = () => {
-    const items = campaigns.map(address => {
-      return {
-        header: address,
-        description: (
-          <Link route={`/campaigns/${address}`}>
-            <a>View Campaign</a>
-          </Link>
-          ),
-        fluid: true
-      }
-    });
-
-    return <Card.Group items={items} />
-  }
-
   return (
     <Layout>
-      <div>
-        <h3>Open Campaigns</h3>
-        <Link route='/campaigns/new'>
-          <a>
-            <Button
-              content="Create Campaign"
-              icon="add circle"
-              primary
-              floated="right"
-            />
-          </a>
-        </Link>
-        {renderCampaings()}
+      <div >
+        {campaigns.map((item, i) => {
+          return (
+            <Card sx={{ minWidth: 565 }} style={{ marginTop: "20px" }}>
+              <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                  Address
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {item}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Link route={`/campaigns/${item}`}>
+                  <Button size="medium">Detail campaign</Button>
+                </Link>
+              </CardActions>
+            </Card>
+          )
+        })}
       </div>
     </Layout>
   )
@@ -43,14 +38,14 @@ const CampaignIndex = ({ campaigns }) => {
 
 export async function getServerSideProps() {
   const campaigns = await factory.methods
-      .getDeployedContracts()
-      .call();
-    
-    return {
-      props : {
-        campaigns
-      }
-    };
+    .getDeployedContracts()
+    .call();
+
+  return {
+    props: {
+      campaigns
+    }
+  };
 }
 
 export default CampaignIndex;
