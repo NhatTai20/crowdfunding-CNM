@@ -111,7 +111,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../routes */ "./routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_3__);
 
-var _jsxFileName = "D:\\CNM\\prj git\\blockchain-crowd\\components\\header.jsx";
+var _jsxFileName = "D:\\CNM\\CROWDFUNDING\\crowdfunding-CNM\\components\\header.jsx";
 
 
 
@@ -201,7 +201,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! next/head */ "next/head");
 /* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_4__);
 
-var _jsxFileName = "D:\\CNM\\prj git\\blockchain-crowd\\components\\layout.jsx";
+var _jsxFileName = "D:\\CNM\\CROWDFUNDING\\crowdfunding-CNM\\components\\layout.jsx";
 
 
 
@@ -314,7 +314,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../routes */ "./routes.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_routes__WEBPACK_IMPORTED_MODULE_5__);
 
-var _jsxFileName = "D:\\CNM\\prj git\\blockchain-crowd\\pages\\index.jsx";
+var _jsxFileName = "D:\\CNM\\CROWDFUNDING\\crowdfunding-CNM\\pages\\index.jsx";
 
 
 
