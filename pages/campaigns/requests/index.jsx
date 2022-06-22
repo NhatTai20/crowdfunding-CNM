@@ -6,7 +6,7 @@ import Campaign from '../../../ethereum/campaign';
 import RequestRow from '../../../components/requestrow';
 
 const RequestIndex = (props) => {
-  const { Header, Row, HeaderCell, Body} = Table;
+  const { Header, Row, HeaderCell, Body } = Table;
 
   const renderRows = () => {
     const requests = JSON.parse(props.requests);
@@ -15,37 +15,40 @@ const RequestIndex = (props) => {
         key={index}
         request={request}
         address={props.address}
-        id = {index}
+        id={index}
         approversCount={props.approversCount}
       />
     })
   }
 
-  return(
+  return (
     <Layout>
-      <h3>Requests</h3>
-      <Link route={`/campaigns/${props.address}/requests/new`}>
+      <h3 style={{ marginLeft: '50px', marginRight: '50px' }}>Requests</h3>
+      <Link route={`/campaigns/${props.address}/requests/new`} >
         <a>
-          <Button primary floated='right' style={{ marginBottom: 10 }}>Add Request</Button>
+          <Button primary floated='right' style={{ marginBottom: 10, marginRight: 50 }}>Add Request</Button>
         </a>
       </Link>
-      <Table>
-        <Header>
-          <Row>
-            <HeaderCell>Id</HeaderCell>
-            <HeaderCell>Description</HeaderCell>
-            <HeaderCell>Amount</HeaderCell>
-            <HeaderCell>Recipient</HeaderCell>
-            <HeaderCell>Approval Count</HeaderCell>
-            <HeaderCell>Approve</HeaderCell>
-            <HeaderCell>Finalize</HeaderCell>
-          </Row>
-        </Header>
-        <Body>
-          {renderRows()}
-        </Body>
-      </Table>
-      <div>
+      <div style={{ marginRight: 50, marginLeft: 50 }}>
+
+        <Table>
+          <Header>
+            <Row>
+              <HeaderCell>Id</HeaderCell>
+              <HeaderCell>Description</HeaderCell>
+              <HeaderCell>Amount</HeaderCell>
+              <HeaderCell>Recipient</HeaderCell>
+              <HeaderCell>Approval Count</HeaderCell>
+              <HeaderCell>Approve</HeaderCell>
+              <HeaderCell>Finalize</HeaderCell>
+            </Row>
+          </Header>
+          <Body>
+            {renderRows()}
+          </Body>
+        </Table>
+      </div>
+      <div style={{ marginTop: 10, marginLeft: 50 }}>
         Found {props.requestCount} requests.
       </div>
     </Layout>
@@ -53,7 +56,7 @@ const RequestIndex = (props) => {
 }
 
 export async function getServerSideProps(props) {
-  const campaignAddress = props.query.address; 
+  const campaignAddress = props.query.address;
   const campaign = Campaign(campaignAddress);
 
   const requestCount = await campaign.methods.requestCount().call();
@@ -65,11 +68,11 @@ export async function getServerSideProps(props) {
       })
   );
   const approversCount = await campaign.methods
-      .approversCount()
-      .call();
+    .approversCount()
+    .call();
 
   return {
-    props : {
+    props: {
       address: campaignAddress,
       requests: JSON.stringify(requests),
       approversCount,

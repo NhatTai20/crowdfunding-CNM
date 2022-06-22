@@ -5,7 +5,7 @@ import Head from 'next/head';
 
 const Layout = (props) => {
   return (
-    <Container>
+    <Container style={{width: '100%'}}>
       <Head>
         <link
           async
@@ -13,7 +13,7 @@ const Layout = (props) => {
           href="//cdn.jsdelivr.net/npm/semantic-ui@2.0.3/dist/semantic.min.css"
         />
       </Head>
-      <Header />
+      <Header/>
       {props.children}
     </Container>
   )

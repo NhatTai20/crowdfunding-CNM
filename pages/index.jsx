@@ -11,10 +11,11 @@ import Typography from '@mui/material/Typography';
 const CampaignIndex = ({ campaigns }) => {
   return (
     <Layout>
-      <div >
+      <div style={{display: "flex", flexDirection: 'column', alignItems: 'center'}}>
+        <Typography variant='h4' style={{marginTop: '10px'}}>Campaign List</Typography>
         {campaigns.map((item, i) => {
           return (
-            <Card sx={{ minWidth: 565 }} style={{ marginTop: "20px" }}>
+            <Card sx={{ maxWidth: 1500 }} style={{ marginTop: "20px", width: '1300px' }}>
               <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                   Address

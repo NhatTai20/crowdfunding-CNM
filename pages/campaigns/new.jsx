@@ -32,8 +32,8 @@ const CampaignNew = () => {
 
   return (
     <Layout>
-      <h3>Create a Campaign</h3>
-      <Form onSubmit={createCampaign} error={!!errorMessage}>
+      <h3 style={{marginLeft: '50px', marginRight: '50px'}}>Create a Campaign</h3>
+      <Form onSubmit={createCampaign} error={!!errorMessage} style={{marginLeft: '50px', marginRight: '50px'}}>
         <Form.Field>
           <label>Minimum contribution</label>
           <Input

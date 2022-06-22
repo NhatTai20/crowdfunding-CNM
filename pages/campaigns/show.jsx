@@ -106,8 +106,8 @@ const CampaignShow = (props) => {
 
   return (
     <Layout>
-      <h3>Campaign Details</h3>
-      <Grid>
+      <h3 style={{marginLeft: '50px'}}>Campaign Details</h3>
+      <Grid style={{marginLeft: '50px', marginRight: '50px'}}>
         <Grid.Row>
           {/* <Grid.Column width={10}>{renderCards()}</Grid.Column> */}
           <Grid.Column width={10}>

@@ -14,7 +14,7 @@ const Header = () => {
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{cursor: 'pointer'}}>
             <Link route='/'>
-              <HomeIcon />
+              <HomeIcon fontSize='large'/>
             </Link>
           </Typography>
           <Link route='/campaigns/new'>

@@ -43,8 +43,8 @@ const RequestNew = (props) => {
       <Link route={requestsRoute}>
         <a>Back</a>
       </Link>
-      <h3>Create a new request</h3>
-      <Form onSubmit={createRequest} error={!!errorMessage}>
+      <h3 style={{marginLeft: '50px'}}>Create a new request</h3>
+      <Form onSubmit={createRequest} error={!!errorMessage} style={{marginLeft: '50px', marginRight: '50px'}}>
         <Form.Field>
           <label>Description</label>
           <Input
