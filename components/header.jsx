@@ -19,12 +19,15 @@ const Header = () => {
             style={{ cursor: "pointer" }}
           >
             <Link route="/">
-              <HomeIcon fontSize="large" />
+              <Button color="inherit" size="large">
+                <HomeIcon fontSize="large" sx={{ marginRight: 1 }} />
+                Crowdfunding
+              </Button>
             </Link>
           </Typography>
           <Link route="/campaigns/new">
-            <Button color="inherit">
-              <AddIcon />
+            <Button color="inherit" size="large">
+              <AddIcon fontSize="large" />
               Create a campagin
             </Button>
           </Link>
