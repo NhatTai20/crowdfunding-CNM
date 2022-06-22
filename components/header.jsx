@@ -12,9 +12,9 @@ const Header = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{cursor: 'pointer'}}>
+          <Typography variant="h6" sx={{ flexGrow: 1 }} style={{ cursor: 'pointer' }}>
             <Link route='/'>
-              <HomeIcon fontSize='large'/>
+              <HomeIcon fontSize='large' />
             </Link>
           </Typography>
           <Link route='/campaigns/new'>

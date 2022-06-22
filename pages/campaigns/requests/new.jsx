@@ -41,7 +41,7 @@ const RequestNew = (props) => {
   return (
     <Layout>
       <Link route={requestsRoute}>
-        <a>Back</a>
+        <Button primary style={{marginLeft: '50px', marginTop: '20px'}}>Back to request list</Button>
       </Link>
       <h3 style={{marginLeft: '50px'}}>Create a new request</h3>
       <Form onSubmit={createRequest} error={!!errorMessage} style={{marginLeft: '50px', marginRight: '50px'}}>
