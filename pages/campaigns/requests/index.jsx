@@ -64,9 +64,6 @@ const RequestIndex = (props) => {
           <Body>{renderRows()}</Body>
         </Table>
       </div>
-      <div style={{ marginTop: 10, marginLeft: 50 }}>
-        Found {props.requestCount} requests.
-      </div>
     </Layout>
   );
 };
