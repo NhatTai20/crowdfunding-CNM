@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Message } from "semantic-ui-react";
+import { Form, Input, Message, Button } from "semantic-ui-react";
 import { Router } from "../routes";
 import Camapign from "../ethereum/campaign";
 import web3 from "../ethereum/web3";
+import { Typography } from "@mui/material";
 
 const ContributeForm = (props) => {
   const [contribution, setContribution] = useState("");
@@ -34,18 +35,22 @@ const ContributeForm = (props) => {
   return (
     <Form onSubmit={contribute} error={!!errorMessage}>
       <Form.Field>
-        <label>Amount to contribute</label>
+        <Typography variant="h5" color={"orange"}>
+          <strong>Amount to contribute</strong>
+        </Typography>
         <Input
-          label="ether"
+          label="ETH"
           labelPosition="right"
           value={contribution}
           onChange={(event) => setContribution(event.target.value)}
         />
       </Form.Field>
       <Message error header="Oops!" content={errorMessage} />
-      <Button primary loading={loading}>
-        Contribute
-      </Button>
+      <div style={{ marginTop: 18 + "px" }}>
+        <Button loading={loading} color="orange" size="large">
+          CONTRIBUTE
+        </Button>
+      </div>
     </Form>
   );
 };
