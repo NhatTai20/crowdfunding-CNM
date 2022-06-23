@@ -3,14 +3,23 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
-    
-    function createCampaign(uint minimum) external {
-        Campaign newCampaign = new Campaign(minimum, msg.sender);        
-        deployedCampaigns.push(address(newCampaign));
+
+    struct campaignDeploy {
+        address campaign;
+        string title;
+    }
+
+    campaignDeploy[] public campaigns;
+
+    function createCampaign(uint minimum, string memory title) external {
+        // Create a new campaign
+        Campaign newCampaign = new Campaign(minimum, msg.sender, title);        
+        // deployedCampaigns.push(address(newCampaign));
+        campaigns.push(campaignDeploy(address(newCampaign), title));
     }
     
-    function getDeployedContracts() external view returns(address[] memory) {
-        return deployedCampaigns;
+    function getDeployedContracts() external view returns(campaignDeploy[] memory) {
+        return campaigns;
     }
 }
 
@@ -25,6 +34,9 @@ contract Campaign {
     }
     
     address public manager;
+    
+    string public titleCompaign; //title of the campaign
+
     uint public minimumContribution;
     mapping(address => bool) public approvers;
     mapping(uint => Request) public requests;
@@ -36,9 +48,10 @@ contract Campaign {
         _;
     }
     
-    constructor(uint minimum, address creator) {
+    constructor(uint minimum, address creator, string memory title) {
         manager = creator;
         minimumContribution = minimum;
+        titleCompaign = title;
     }
     
     function contribute() external payable {
@@ -86,14 +99,16 @@ contract Campaign {
       uint,
       uint,
       uint,
-      address
+      address,
+      string memory
     ) {
       return (
         minimumContribution,
         address(this).balance,
         requestCount,
         approversCount,
-        manager
+        manager,
+        titleCompaign
       );
     }
 }

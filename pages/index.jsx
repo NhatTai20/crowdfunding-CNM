@@ -34,14 +34,14 @@ const CampaignIndex = ({ campaigns }) => {
                   color="text.secondary"
                   gutterBottom
                 >
-                  Address
+                  Title
                 </Typography>
                 <Typography variant="h5" component="div">
-                  {item}
+                  {item.title}
                 </Typography>
               </CardContent>
               <CardActions>
-                <Link route={`/campaigns/${item}`}>
+                <Link route={`/campaigns/${item.campaign}`}>
                   <Button size="medium">Detail campaign</Button>
                 </Link>
               </CardActions>

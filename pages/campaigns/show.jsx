@@ -15,6 +15,12 @@ import Typography from "@mui/material/Typography";
 const CampaignShow = (props) => {
   const items = [
     {
+      header: props.titleCompaign,
+      meta: "Title",
+      description: "The title of Campaign.",
+      style: { overflowWrap: "break-word" },
+    },
+    {
       header: props.manager,
       meta: "Address of manager",
       description:
