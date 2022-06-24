@@ -10,6 +10,8 @@ const CampaignNew = () => {
   const [title, setTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [goal, setGoal] = useState("");
+  const [description, setDescription] = useState("");
 
   const createCampaign = async (event) => {
     event.preventDefault();
@@ -19,11 +21,12 @@ const CampaignNew = () => {
     try {
       const accounts = await web3.eth.getAccounts();
       await factory.methods
-        .createCampaign(minimumContribution, title) //
+        .createCampaign(minimumContribution, goal, title, description) //
         .send({
           from: accounts[0],
         });
       Router.pushRoute("/");
+      console.log(goal);
     } catch (err) {
       setErrorMessage(err.message);
     }
@@ -46,6 +49,18 @@ const CampaignNew = () => {
           <Input
             value={title}
             onChange={(event) => setTitle(event.target.value)}
+          />
+          <label>Description</label>
+          <Input
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
+          <label>Goal</label>
+          <Input
+            label="ETH"
+            labelPosition="right"
+            value={goal}
+            onChange={(event) => setGoal(event.target.value)}
           />
           <label>Minimum contribution</label>
           <Input

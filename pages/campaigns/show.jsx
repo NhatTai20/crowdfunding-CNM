@@ -22,6 +22,12 @@ const CampaignShow = (props) => {
       style: { overflowWrap: "break-word" },
     },
     {
+      header: props.description,
+      meta: "Description",
+      description: "The description of Campaign.",
+      style: { overflowWrap: "break-word" },
+    },
+    {
       header: props.manager,
       meta: "Address of manager",
       description:
@@ -35,6 +41,21 @@ const CampaignShow = (props) => {
         "You must contiribute at lease this much wei to became an approver.",
     },
     {
+      header: props.amountGoal,
+      meta: "Amount Goal (ETH)",
+      description: "Amount Goal fund.",
+    },
+    {
+      header: web3.utils.fromWei(props.totalContribution, "ether"),
+      meta: "Total Contribution (ETH)",
+      description: "Total contribution.",
+    },
+    {
+      header: web3.utils.fromWei(props.balance, "ether"),
+      meta: "Campaign balance (ETH)",
+      description: "The balance is how much money this campaign has to spent.",
+    },
+    {
       header: props.requestCount,
       meta: "Number of requests",
       description:
@@ -44,11 +65,6 @@ const CampaignShow = (props) => {
       header: props.approversCount,
       meta: "Number of approvers",
       description: "Number of people who already donated to this campaign,",
-    },
-    {
-      header: web3.utils.fromWei(props.balance, "ether"),
-      meta: "Campaign balance (ETH)",
-      description: "The balance is how much money this campaign has to spent.",
     },
   ];
 
@@ -134,6 +150,9 @@ export async function getServerSideProps(props) {
       manager: summary[4],
       address: props.query.address,
       titleCompaign: summary[5],
+      amountGoal: summary[6],
+      description: summary[7],
+      totalContribution: summary[8],
     },
   };
 }

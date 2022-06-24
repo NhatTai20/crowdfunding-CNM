@@ -7,15 +7,18 @@ contract CampaignFactory {
     struct campaignDeploy {
         address campaign;
         string title;
+        uint goal;
+        string description;
+        uint totalContribution;
     }
 
     campaignDeploy[] public campaigns;
 
-    function createCampaign(uint minimum, string memory title) external {
+    function createCampaign(uint minimum, uint goal, string memory title, string memory desc) external {
         // Create a new campaign
-        Campaign newCampaign = new Campaign(minimum, msg.sender, title);        
+        Campaign newCampaign = new Campaign(minimum, msg.sender, title, goal, desc);        
         // deployedCampaigns.push(address(newCampaign));
-        campaigns.push(campaignDeploy(address(newCampaign), title));
+        campaigns.push(campaignDeploy(address(newCampaign), title, goal, desc, newCampaign.getTotalContribution()));
     }
     
     function getDeployedContracts() external view returns(campaignDeploy[] memory) {
@@ -36,6 +39,9 @@ contract Campaign {
     address public manager;
     
     string public titleCompaign; //title of the campaign
+    uint public amountGoal; //amount of ether to be raised
+    string public CampaignDescription; //description of the campaign
+    uint public totalContribution; //total amount of ether raised
 
     uint public minimumContribution;
     mapping(address => bool) public approvers;
@@ -48,16 +54,20 @@ contract Campaign {
         _;
     }
     
-    constructor(uint minimum, address creator, string memory title) {
+    constructor(uint minimum, address creator, string memory title, uint goal, string memory description) {
         manager = creator;
         minimumContribution = minimum;
         titleCompaign = title;
+        amountGoal = goal;
+        CampaignDescription = description;
+        totalContribution = 0;
     }
     
     function contribute() external payable {
         require(msg.value >= minimumContribution);
         approvers[msg.sender] = true;
         approversCount++;
+        totalContribution += msg.value; //wei 
     }
     
     function createRequest(
@@ -65,6 +75,7 @@ contract Campaign {
         uint value,
         address recipient) external managerOnly
     {
+        require(address(this).balance >= value);
         Request storage newRequest = requests[requestCount];
         newRequest.description = description;
         newRequest.value = value;
@@ -94,13 +105,20 @@ contract Campaign {
         request.complete = true;
     }
 
+    function getTotalContribution() public view returns(uint) {
+        return totalContribution;
+    }
+
     function getSummary() external view returns (
       uint,
       uint,
       uint,
       uint,
       address,
-      string memory
+      string memory,
+      uint,
+      string memory,
+      uint
     ) {
       return (
         minimumContribution,
@@ -108,7 +126,10 @@ contract Campaign {
         requestCount,
         approversCount,
         manager,
-        titleCompaign
+        titleCompaign,
+        amountGoal,
+        CampaignDescription,
+        totalContribution
       );
     }
 }
