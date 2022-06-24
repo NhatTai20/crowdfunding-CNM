@@ -9,6 +9,8 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 const CampaignIndex = ({ campaigns }) => {
+  console.log(campaigns);
+
   return (
     <Layout>
       <div
@@ -22,6 +24,7 @@ const CampaignIndex = ({ campaigns }) => {
           Campaign List
         </Typography>
         {campaigns.map((item, i) => {
+          console.log(item);
           return (
             <Card
               key={i}
@@ -37,11 +40,11 @@ const CampaignIndex = ({ campaigns }) => {
                   Title
                 </Typography>
                 <Typography variant="h5" component="div">
-                  {item.title}
+                  {item[1]}
                 </Typography>
               </CardContent>
               <CardActions>
-                <Link route={`/campaigns/${item.campaign}`}>
+                <Link route={`/campaigns/${item[0]}`}>
                   <Button size="medium">Detail campaign</Button>
                 </Link>
               </CardActions>

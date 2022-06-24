@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 const CampaignShow = (props) => {
+  // console.log(props);
   const items = [
     {
       header: props.titleCompaign,
@@ -122,6 +123,7 @@ const CampaignShow = (props) => {
 export async function getServerSideProps(props) {
   const campaign = Campaign(props.query.address);
   const summary = await campaign.methods.getSummary().call();
+  // console.log(summary);
 
   return {
     props: {
@@ -131,6 +133,7 @@ export async function getServerSideProps(props) {
       approversCount: summary[3],
       manager: summary[4],
       address: props.query.address,
+      titleCompaign: summary[5],
     },
   };
 }
