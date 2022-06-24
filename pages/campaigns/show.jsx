@@ -115,11 +115,10 @@ const CampaignShow = (props) => {
                     component="h2"
                   >
                     <p title={item.description}>
-                      <strong>{item.meta}</strong>:{" "}
+                      {item.meta}:{" "}
                       <Typography
                         variant="h5"
-                        color="textSecondary"
-                        sx={{ display: "inline" }}
+                        sx={{ display: "inline", fontWeight: "bold" }}
                       >
                         {item.header}
                       </Typography>

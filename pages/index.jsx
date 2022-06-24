@@ -37,7 +37,7 @@ const CampaignIndex = ({ campaigns }) => {
                   <Grid.Column width={9}>
                     <Card>
                       <CardMedia
-                        sx={{ height: "290px" }}
+                        sx={{ height: "310px" }}
                         image="https://image.shutterstock.com/image-photo/hand-arrange-wood-letters-campaigns-260nw-1011730201.jpg"
                         component="img"
                         alt="Crowdfunding"
@@ -47,37 +47,49 @@ const CampaignIndex = ({ campaigns }) => {
                   <Grid.Column width={7}>
                     <CardContent>
                       <Typography
-                        sx={{ fontSize: 14 }}
+                        sx={{ fontSize: 16 }}
                         color="text.secondary"
                         gutterBottom
                       >
-                        Title
+                        Title:
                       </Typography>
-                      <Typography variant="h5" component="div">
+                      <Typography
+                        variant="h5"
+                        component="div"
+                        sx={{ fontWeight: "bold" }}
+                      >
                         {item[1]}
                       </Typography>
                       <br />
                       <Typography
-                        sx={{ fontSize: 14 }}
+                        sx={{ fontSize: 16 }}
                         color="text.secondary"
                         gutterBottom
                       >
-                        Description
+                        Description:
                       </Typography>
 
-                      <Typography variant="h5" component="div">
+                      <Typography
+                        variant="h5"
+                        component="div"
+                        sx={{ fontWeight: "bold" }}
+                      >
                         {item[3]}
                       </Typography>
                       <br />
                       <Typography
-                        sx={{ fontSize: 14 }}
+                        sx={{ fontSize: 16 }}
                         color="text.secondary"
                         gutterBottom
                         inline="true"
                       >
                         Goal:
                       </Typography>
-                      <Typography variant="h5" component="div">
+                      <Typography
+                        variant="h5"
+                        component="div"
+                        sx={{ fontWeight: "bold" }}
+                      >
                         {item[2]} ETH
                       </Typography>
                     </CardContent>
