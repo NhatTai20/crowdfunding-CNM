@@ -8,7 +8,10 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { CardMedia } from "@mui/material";
 const CampaignIndex = ({ campaigns }) => {
+  // console.log(campaigns);
+
   return (
     <Layout>
       <div
@@ -34,14 +37,38 @@ const CampaignIndex = ({ campaigns }) => {
                   color="text.secondary"
                   gutterBottom
                 >
-                  Address
+                  Title
                 </Typography>
                 <Typography variant="h5" component="div">
-                  {item}
+                  {item[1]}
+                </Typography>
+                <br />
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  Description
+                </Typography>
+
+                <Typography variant="h5" component="div">
+                  {item[3]}
+                </Typography>
+                <br />
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                  inline="true"
+                >
+                  Goal:
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {item[2]} ETH
                 </Typography>
               </CardContent>
               <CardActions>
-                <Link route={`/campaigns/${item}`}>
+                <Link route={`/campaigns/${item[0]}`}>
                   <Button size="medium">Detail campaign</Button>
                 </Link>
               </CardActions>
