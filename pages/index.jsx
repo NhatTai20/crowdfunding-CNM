@@ -9,6 +9,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { CardMedia } from "@mui/material";
+import { Grid } from "semantic-ui-react";
 const CampaignIndex = ({ campaigns }) => {
   // console.log(campaigns);
 
@@ -31,47 +32,69 @@ const CampaignIndex = ({ campaigns }) => {
               sx={{ maxWidth: 1500 }}
               style={{ marginTop: "20px", width: "1300px" }}
             >
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  Title
-                </Typography>
-                <Typography variant="h5" component="div">
-                  {item[1]}
-                </Typography>
-                <br />
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  Description
-                </Typography>
+              <Grid>
+                <Grid.Row>
+                  <Grid.Column width={9}>
+                    <Card>
+                      <CardMedia
+                        sx={{ height: "290px" }}
+                        image="https://image.shutterstock.com/image-photo/hand-arrange-wood-letters-campaigns-260nw-1011730201.jpg"
+                        component="img"
+                        alt="Crowdfunding"
+                      />
+                    </Card>
+                  </Grid.Column>
+                  <Grid.Column width={7}>
+                    <CardContent>
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        Title
+                      </Typography>
+                      <Typography variant="h5" component="div">
+                        {item[1]}
+                      </Typography>
+                      <br />
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        Description
+                      </Typography>
 
-                <Typography variant="h5" component="div">
-                  {item[3]}
-                </Typography>
-                <br />
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                  inline="true"
-                >
-                  Goal:
-                </Typography>
-                <Typography variant="h5" component="div">
-                  {item[2]} ETH
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Link route={`/campaigns/${item[0]}`}>
-                  <Button size="medium">Detail campaign</Button>
-                </Link>
-              </CardActions>
+                      <Typography variant="h5" component="div">
+                        {item[3]}
+                      </Typography>
+                      <br />
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                        inline="true"
+                      >
+                        Goal:
+                      </Typography>
+                      <Typography variant="h5" component="div">
+                        {item[2]} ETH
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Link route={`/campaigns/${item[0]}`}>
+                        <Button
+                          size="large"
+                          variant="contained"
+                          color="primary"
+                        >
+                          Detail campaign
+                        </Button>
+                      </Link>
+                    </CardActions>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             </Card>
           );
         })}
