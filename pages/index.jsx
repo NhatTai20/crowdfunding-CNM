@@ -11,6 +11,10 @@ import Typography from "@mui/material/Typography";
 import { CardMedia } from "@mui/material";
 import { Grid } from "semantic-ui-react";
 const CampaignIndex = ({ campaigns }) => {
+  const getDate = (date) => {
+    let d = new Date(date * 1000);
+    return `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
+  };
   // console.log(campaigns);
 
   return (
@@ -37,7 +41,7 @@ const CampaignIndex = ({ campaigns }) => {
                   <Grid.Column width={9}>
                     <Card>
                       <CardMedia
-                        sx={{ height: "310px" }}
+                        sx={{ height: "385px" }}
                         image="https://image.shutterstock.com/image-photo/hand-arrange-wood-letters-campaigns-260nw-1011730201.jpg"
                         component="img"
                         alt="Crowdfunding"
@@ -91,6 +95,22 @@ const CampaignIndex = ({ campaigns }) => {
                         sx={{ fontWeight: "bold" }}
                       >
                         {item[2]} ETH
+                      </Typography>
+                      <br />
+                      <Typography
+                        sx={{ fontSize: 16 }}
+                        color="text.secondary"
+                        gutterBottom
+                        inline="true"
+                      >
+                        Deadline:
+                      </Typography>
+                      <Typography
+                        variant="h5"
+                        component="div"
+                        sx={{ fontWeight: "bold" }}
+                      >
+                        {getDate(item[4])}
                       </Typography>
                     </CardContent>
                     <CardActions>

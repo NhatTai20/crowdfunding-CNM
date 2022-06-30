@@ -12,6 +12,7 @@ const CampaignNew = () => {
   const [loading, setLoading] = useState(false);
   const [goal, setGoal] = useState("");
   const [description, setDescription] = useState("");
+  const [durationInDays, setDurationInDays] = useState("");
 
   const createCampaign = async (event) => {
     event.preventDefault();
@@ -21,7 +22,13 @@ const CampaignNew = () => {
     try {
       const accounts = await web3.eth.getAccounts();
       await factory.methods
-        .createCampaign(minimumContribution, goal, title, description) //
+        .createCampaign(
+          minimumContribution,
+          goal,
+          title,
+          description,
+          durationInDays
+        ) //
         .send({
           from: accounts[0],
         });
@@ -54,6 +61,13 @@ const CampaignNew = () => {
           <Input
             value={description}
             onChange={(event) => setDescription(event.target.value)}
+          />
+          <label>Duration</label>
+          <Input
+            label="Days"
+            labelPosition="right"
+            value={durationInDays}
+            onChange={(event) => setDurationInDays(event.target.value)}
           />
           <label>Goal</label>
           <Input

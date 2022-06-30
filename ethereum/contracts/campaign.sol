@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
+// import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+
 contract CampaignFactory {
+    // using SafeMath for uint;
+
     address[] public deployedCampaigns;
 
     struct campaignDeploy {
@@ -9,16 +13,18 @@ contract CampaignFactory {
         string title;
         uint goal;
         string description;
+        uint raiseUntil;
         uint totalContribution;
     }
 
     campaignDeploy[] public campaigns;
 
-    function createCampaign(uint minimum, uint goal, string memory title, string memory desc) external {
+    function createCampaign(uint minimum, uint goal, string memory title, string memory desc, uint durationInDays) external {
+        uint raiseUntil = block.timestamp + (durationInDays * (1 days));
         // Create a new campaign
-        Campaign newCampaign = new Campaign(minimum, msg.sender, title, goal, desc);        
+        Campaign newCampaign = new Campaign(minimum, msg.sender, title, goal, desc, raiseUntil);        
         // deployedCampaigns.push(address(newCampaign));
-        campaigns.push(campaignDeploy(address(newCampaign), title, goal, desc, newCampaign.getTotalContribution()));
+        campaigns.push(campaignDeploy(address(newCampaign), title, goal, desc, raiseUntil ,newCampaign.getTotalContribution()));
     }
     
     function getDeployedContracts() external view returns(campaignDeploy[] memory) {
@@ -27,6 +33,8 @@ contract CampaignFactory {
 }
 
 contract Campaign {
+    // using SafeMath for uint;
+    
     struct Request {
         string description;
         uint value;
@@ -35,6 +43,11 @@ contract Campaign {
         uint approvalCount;
         mapping(address => bool) approvals;
     }
+
+    enum State {
+        Fundraising,
+        Expired
+    }
     
     address public manager;
     
@@ -42,6 +55,10 @@ contract Campaign {
     uint public amountGoal; //amount of ether to be raised
     string public CampaignDescription; //description of the campaign
     uint public totalContribution; //total amount of ether raised
+    mapping(address => uint) public contributions; 
+    State public state = State.Fundraising; // initial state of the campaign
+    uint public raiseBy; //date when the campaign will be expired
+    uint public currentBalance;
 
     uint public minimumContribution;
     mapping(address => bool) public approvers;
@@ -49,25 +66,43 @@ contract Campaign {
     uint public requestCount;
     uint public approversCount;
     
+    // Modifier to check current state
+    modifier inState(State _state) {
+        require(state == _state);
+        _;
+    }
+
     modifier managerOnly() {
         require(msg.sender == manager);
         _;
     }
     
-    constructor(uint minimum, address creator, string memory title, uint goal, string memory description) {
+    constructor(uint minimum, address creator, string memory title, uint goal, string memory description, uint deadline) {
         manager = creator;
         minimumContribution = minimum;
         titleCompaign = title;
         amountGoal = goal;
         CampaignDescription = description;
         totalContribution = 0;
+        raiseBy = deadline;
+        currentBalance = 0;
     }
     
-    function contribute() external payable {
+    function checkIfFundingExpired() public {
+        if (block.timestamp > raiseBy) {
+            state = State.Expired;
+        }
+    }
+
+    function contribute() external payable inState(State.Fundraising) {
+        require(msg.sender != manager);
         require(msg.value >= minimumContribution);
+        contributions[msg.sender] = contributions[msg.sender] + (msg.value);
         approvers[msg.sender] = true;
         approversCount++;
-        totalContribution += msg.value; //wei 
+        totalContribution = totalContribution + msg.value; //wei 
+        currentBalance = currentBalance + (msg.value);
+        checkIfFundingExpired();
     }
     
     function createRequest(
@@ -109,6 +144,24 @@ contract Campaign {
         return totalContribution;
     }
 
+    function getRefund() public inState(State.Expired) returns (bool) 
+    {
+        require(contributions[msg.sender] > 0);
+
+        uint256 amountToRefund = contributions[msg.sender];
+        contributions[msg.sender] = 0;
+
+        if (!payable(msg.sender).send(amountToRefund)) {
+            contributions[msg.sender] = amountToRefund;
+            return false;
+        } else {
+            totalContribution = totalContribution - (amountToRefund);
+            approversCount--;
+        }
+
+        return true;
+    }
+
     function getSummary() external view returns (
       uint,
       uint,
@@ -118,6 +171,7 @@ contract Campaign {
       string memory,
       uint,
       string memory,
+      uint,
       uint
     ) {
       return (
@@ -129,7 +183,8 @@ contract Campaign {
         titleCompaign,
         amountGoal,
         CampaignDescription,
-        totalContribution
+        totalContribution,
+        raiseBy
       );
     }
 }

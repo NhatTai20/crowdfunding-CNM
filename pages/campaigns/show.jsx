@@ -11,9 +11,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import RefundForm from "../../components/refundform";
 
 const CampaignShow = (props) => {
   // console.log(props);
+
   const items = [
     {
       header: props.titleCompaign,
@@ -44,6 +46,11 @@ const CampaignShow = (props) => {
       header: props.amountGoal,
       meta: "Amount Goal (ETH)",
       description: "Amount Goal fund.",
+    },
+    {
+      header: props.raiseBy,
+      meta: "Deadline ",
+      description: "Deadline of campaign.",
     },
     {
       header: web3.utils.fromWei(props.totalContribution, "ether"),
@@ -127,6 +134,7 @@ const CampaignShow = (props) => {
                 </CardContent>
               ))}
             </Card>
+            <RefundForm address={props.address} />
             <ContributeForm address={props.address} />
           </Grid.Column>
         </Grid.Row>
@@ -136,6 +144,10 @@ const CampaignShow = (props) => {
 };
 
 export async function getServerSideProps(props) {
+  const getDate = (date) => {
+    let d = new Date(date * 1000);
+    return `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
+  };
   const campaign = Campaign(props.query.address);
   const summary = await campaign.methods.getSummary().call();
   // console.log(summary);
@@ -152,6 +164,7 @@ export async function getServerSideProps(props) {
       amountGoal: summary[6],
       description: summary[7],
       totalContribution: summary[8],
+      raiseBy: getDate(summary[9]),
     },
   };
 }
