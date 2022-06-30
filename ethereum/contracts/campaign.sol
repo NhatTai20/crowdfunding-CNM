@@ -147,8 +147,9 @@ contract Campaign {
     function getRefund() public inState(State.Expired) returns (bool) 
     {
         require(contributions[msg.sender] > 0);
+        require(totalContribution < amountGoal);
 
-        uint256 amountToRefund = contributions[msg.sender];
+        uint amountToRefund = contributions[msg.sender];
         contributions[msg.sender] = 0;
 
         if (!payable(msg.sender).send(amountToRefund)) {

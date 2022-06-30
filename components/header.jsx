@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "../routes";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,7 +7,15 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import HomeIcon from "@mui/icons-material/Home";
+import web3 from "../ethereum/web3";
+
 const Header = () => {
+  // const [account, setAccount] = useState("");
+  // useEffect(async () => {
+  //   const accounts = await web3.eth.getAccounts();
+  //   setAccount(accounts[0]);
+  // });
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -25,6 +33,11 @@ const Header = () => {
               </Button>
             </Link>
           </Typography>
+          {/* <Button size="large">
+            <Typography variant="h6" color={"ActiveBorder"}>
+              {account}
+            </Typography>
+          </Button> */}
           <Link route="/campaigns/new">
             <Button color="inherit" size="large">
               <AddIcon fontSize="large" />
