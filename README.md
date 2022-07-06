@@ -14,6 +14,7 @@
  
 # Install guide
   Cài đặt dependencies: npm install
+  
   Chạy chương trình: npm start
   
 # Các tính năng
