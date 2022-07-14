@@ -1,7 +1,7 @@
-import React from "react";
-import { Button, Table } from "semantic-ui-react";
-import web3 from "../ethereum/web3";
-import Campaign from "../ethereum/campaign";
+import React from 'react';
+import { Button, Table } from 'semantic-ui-react';
+import web3 from '../ethereum/web3';
+import Campaign from '../ethereum/campaign';
 
 const RequestRow = (props) => {
   const { Row, Cell } = Table;
@@ -9,11 +9,11 @@ const RequestRow = (props) => {
   const readyToFinalize = request.approvalCount > approversCount / 2;
 
   const onApprove = async () => {
-    await executeOnBlockchain("approveRequest");
+    await executeOnBlockchain('approveRequest');
   };
 
   const onFinalize = async () => {
-    await executeOnBlockchain("finalizeRequest");
+    await executeOnBlockchain('finalizeRequest');
   };
 
   const executeOnBlockchain = async (method) => {
@@ -31,7 +31,7 @@ const RequestRow = (props) => {
     >
       <Cell>{id}</Cell>
       <Cell>{request.description}</Cell>
-      <Cell>{web3.utils.fromWei(request.value, "ether")}</Cell>
+      <Cell>{web3.utils.fromWei(request.value, 'ether')}</Cell>
       <Cell>{request.recipient}</Cell>
       <Cell>
         {request.approvalCount} / {approversCount}

@@ -46,6 +46,7 @@ contract Campaign {
 
     enum State {
         Fundraising,
+        Fulfilled,
         Expired
     }
     
@@ -72,6 +73,11 @@ contract Campaign {
         _;
     }
 
+    modifier difState(State _state) {
+        require(state != _state);
+        _;
+    }
+
     modifier managerOnly() {
         require(msg.sender == manager);
         _;
@@ -88,27 +94,32 @@ contract Campaign {
         currentBalance = 0;
     }
     
-    function checkIfFundingExpired() public {
-        if (block.timestamp > raiseBy) {
+    function checkIfFundingFulfilledOrExpired() public {
+        if (totalContribution >= amountGoal*1000000000000000000) {
+            state = State.Fulfilled;
+        } else if (block.timestamp > raiseBy) {
             state = State.Expired;
         }
     }
 
-    function contribute() external payable inState(State.Fundraising) {
+    function contribute() external payable difState(State.Expired) {
+        require(block.timestamp < raiseBy); // case: fulfilled and not expired
         require(msg.sender != manager);
         require(msg.value >= minimumContribution);
         contributions[msg.sender] = contributions[msg.sender] + (msg.value);
-        approvers[msg.sender] = true;
-        approversCount++;
+        if(!approvers[msg.sender]) { //if the sender is not an approver
+            approvers[msg.sender] = true;
+            approversCount++;
+        }
         totalContribution = totalContribution + msg.value; //wei 
         currentBalance = currentBalance + (msg.value);
-        checkIfFundingExpired();
+        checkIfFundingFulfilledOrExpired();
     }
     
     function createRequest(
         string memory description,
         uint value,
-        address recipient) external managerOnly
+        address recipient) external managerOnly difState(State.Expired)
     {
         require(address(this).balance >= value);
         Request storage newRequest = requests[requestCount];
@@ -116,11 +127,10 @@ contract Campaign {
         newRequest.value = value;
         newRequest.recipient = recipient;
         newRequest.complete = false;
-        
         requestCount++;
     }
     
-    function approveRequest(uint index) public {
+    function approveRequest(uint index) public difState(State.Expired){
         Request storage request = requests[index];
         
         require(approvers[msg.sender]);
@@ -130,7 +140,7 @@ contract Campaign {
         request.approvalCount++;
     } 
     
-    function finalizeRequest(uint index) public managerOnly {
+    function finalizeRequest(uint index) public managerOnly difState(State.Expired){
         Request storage request = requests[index];
         
         require(!request.complete);
@@ -147,8 +157,16 @@ contract Campaign {
     function getRefund() public inState(State.Expired) returns (bool) 
     {
         require(contributions[msg.sender] > 0);
+        
+        uint totalRequest = 0; //wei
+        for (uint i = 0; i < requestCount; i++) {
+            Request storage request = requests[i];
+            if (request.complete) {
+                totalRequest += request.value;
+            }
+        }
 
-        uint amountToRefund = contributions[msg.sender];
+        uint amountToRefund = contributions[msg.sender] - (contributions[msg.sender]*totalRequest/totalContribution); //after requests are refunded
         contributions[msg.sender] = 0;
 
         if (!payable(msg.sender).send(amountToRefund)) {
@@ -162,7 +180,7 @@ contract Campaign {
         return true;
     }
 
-    function getSummary() external view returns (
+    function getSummary() public view returns (
       uint,
       uint,
       uint,
